@@ -20,13 +20,13 @@ class ClassList extends Component {
   render() {
     return (
       <div>
-        <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2  bg-primary3 main">
+        <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 bg-primary3 main">
           <h2>Classes</h2>
 
           <section className="row text-center placeholders">
             {AWANAClassNames.map(AWANAClassName => (
               <div className="col-md-6 col-lg-3 placeholder">
-                <a href="#" className="">
+                <a href="#" className="ClassButton">
                   <div className="card p-4">
                   <i class="fa fa-graduation-cap fa-5x" aria-hidden="true"></i>
 
