@@ -1,8 +1,11 @@
 @import "variables";
 @import "./components/body";
 @import "./components/nav";
+@import "./components/form.scss";
+@import "./components/sidebar";
 @import "./components/button";
 @import "./components/main";
+
 
 
 
@@ -11,3 +14,6 @@
 @import "./components/pages/home";
 @import "./components/pages/studentProfile";
 @import "./components/pages/classlist";
+
+
+

@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
+import { Route, Switch } from "react-router-dom";
+
 import SideBar from "../Components/SideBar";
 import StudentList from "../Components/StudentList";
-import ClassList  from "../Components/ClassList";
+import ClassList from "../Components/ClassList";
 
 class DashBoard extends Component {
   constructor(props) {
@@ -14,8 +17,9 @@ class DashBoard extends Component {
     return (
       <div>
         <SideBar />
-        <ClassList />
-        <StudentList />
+
+         <ClassList />
+        <StudentList /> 
       </div>
     );
   }

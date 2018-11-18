@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 class Navbar extends Component {
   render() {
     return (
-      <div>
+
         <nav className="navbar navbar-toggleable-md navbar-inverse fixed-top bg-primar1 m-auto">
           <button
             className="navbar-toggler navbar-toggler-right hidden-lg-up"
@@ -26,7 +26,7 @@ class Navbar extends Component {
               width="70px"
             />
             
-            <span className="awan-tag-text hidden-md-up pl-2">Awana Dashboard</span>
+            <span className="awan-tag-text hidden-md-up pl-2">AWANA Dashboard</span>
           </a>
           <div className="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul className="navbar-nav m-auto">
@@ -44,14 +44,13 @@ class Navbar extends Component {
                   </li>
                 </ul>
               </li>
-              <div className="awana-nav-title hidden-md-down">Awana Dashboard</div>
+              <div className="awana-nav-title hidden-md-down">AWANA Dashboard</div>
             </ul>
             <form className="form-inline mt-2 mt-md-0">
               <i className="fas fa-user" />
             </form>
           </div>
         </nav>
-      </div>
     );
   }
 }

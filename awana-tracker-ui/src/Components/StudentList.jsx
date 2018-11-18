@@ -15,6 +15,11 @@ let students = [
       "gradeLevel": "Sparkies",
       "url": 'student-profile.html'
     },
+    {
+      "name": "Test Twiss",
+      "gradeLevel": "Cubies",
+      "url": 'student-profile.html'
+    },
   ]
 class StudentList extends Component {
   constructor(props){
@@ -27,11 +32,8 @@ class StudentList extends Component {
   render() {
       const { students} = this.state
     return (
-      <div>
-        <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2  bg-primary3 main">
-          <h2>Student List </h2>
-
-          <section className="row text-center placeholders">
+      <div className="row text-center placeholders">
+     
          { students.map( (student) => (
             <div className="col-md-6 col-lg-3 placeholder">
               <div className="card p-4">
@@ -52,8 +54,7 @@ class StudentList extends Component {
               </div>
             </div>
            ))}
-          </section>
-        </main>
+  
       </div>
     );
   }
