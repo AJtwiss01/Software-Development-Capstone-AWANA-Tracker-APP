@@ -9,7 +9,10 @@ The AWANA Tracker application performs the following:
 2. Gives the Teacher ability to check students in for attendance.
 3. Give the Teacher the ability to assin badge level completions. 
 
-
+### Clone Repo 
+```
+https://github.com/AJtwiss01/Software-Development-Capstone-AWANA-Tracker-APP.git
+```
 
 ### Running AWANA Tracker UI 
 
@@ -47,3 +50,40 @@ http://localhost:3000/
 
 #http://localhost:3000/manage-users
 
+### Running AWANA Tracker Service/API
+first install Nodemon global to edit with out reloads
+```
+npm install -g nodemon
+```
+# navigate to below:
+```
+cd awana-tracker-api
+```
+# run 
+```
+npm i
+```
+```
+nodemon app.js
+```
+### Navicate to http://localhost:4000/graphql
+
+copy and paste: 
+```
+{
+ users{
+  id
+  name
+  userType
+ }
+  classes{
+    id
+    name
+  }
+  badges{
+    id
+    name
+  }
+}
+```
+and run query to test API
