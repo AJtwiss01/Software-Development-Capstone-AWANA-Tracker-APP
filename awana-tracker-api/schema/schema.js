@@ -1,7 +1,5 @@
 const graphql = require("graphql");
 const _ = require("lodash");
-const Book = require("../models/book");
-const Author = require("../models/author");
 const User = require("../models/user");
 const Class = require("../models/class");
 const Badge = require("../models/badge");
@@ -18,61 +16,70 @@ const {
 
 const users = [
   {
-    id: "1",
     name: "AJ Twiss",
     age: 40,
     userType: "Teacher",
-    class: "T&T"
+    classId: "3",
+    badge1: "1",
+    badge2: "2"
   },
   {
-    id: "2",
     name: "Caden Twiss",
     age: 10,
     userType: "Student",
-    class: "T&T"
+    classId: "3"
   },
   {
-    id: "3",
     name: "Ava Twiss",
     age: 7,
     userType: "Student",
-    class: "Sparkies"
+    classId: "1"
   }
 ];
 
 const classes = [
   {
-    id: "1",
+    classId: "1",
     name: "Cubies"
   },
   {
-    id: "2",
+    classId: "2",
     name: "Sparkies"
   },
   {
-    id: "3",
+    classId: "3",
     name: "T&T"
   }
 ];
 
 const badges = [
   {
-    id: 1,
+    badgeId: "1",
     name: "Section 1",
     url: "assets/img/badge1.png"
   },
   {
-    id: 2,
+    badgeId: "2",
     name: "Section 2",
     url: "assets/img/badge1.png"
   },
   {
-    id: 3,
+    badgeId: "3",
     name: "Section 3",
     url: "assets/img/badge1.png"
   },
   {
-    id: 4,
+    badgeId: "4",
+    name: "Seciton 4",
+    url: "assets/img/badge1.png"
+  },
+  {
+    badgeId: "5",
+    name: "Seciton 4",
+    url: "assets/img/badge1.png"
+  },
+  {
+    badgeId: "6",
     name: "Seciton 4",
     url: "assets/img/badge1.png"
   }
@@ -81,44 +88,83 @@ const badges = [
 const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
-    id: { type: GraphQLID },
-    age: { type: GraphQLInt },
     name: { type: GraphQLString },
-    userType: { type: GraphQLString }
-    // books: {
-    //   type: new GraphQLList(BookType),
-    //   resolve(parent, args) {
-    //     console.log(parent);
-    //     // return _.filter(books, { authorId: parent.id})
-    //     return Book.find({ authorId: parent.id });
-    //   }
-    // }
+    age: { type: GraphQLInt },
+    userType: { type: GraphQLString },
+    classId: {
+      type: new GraphQLList(ClassType),
+      resolve(parent, arg) {
+        console.log(parent.classId);
+        // return _.filter(classes, { classId: parent.classId });
+        return Class.find({ classId: parent.classId });
+      }
+    },
+    badge1: {
+      type: new GraphQLList(BadgeType),
+      resolve(parent, arg) {
+        console.log("badge ", parent.badge1);
+        // return _.filter(badges, { badgeId: parent.badge1 });
+        return Badge.find({ badgeId: parent.badge1 });
+      }
+    },
+    badge2: {
+      type: new GraphQLList(BadgeType),
+      resolve(parent, arg) {
+        console.log("badge ", parent.badge2);
+        // return _.filter(badges, { badgeId: parent.badge2 });
+        return Badge.find({ badgeId: parent.badge2 });
+      }
+    },
+    badge3: {
+      type: new GraphQLList(BadgeType),
+      resolve(parent, arg) {
+        console.log("badge ", parent.badge3);
+        // return _.filter(badges, { badgeId: parent.badge3 });
+        return Badge.find({ badgeId: parent.badge3 });
+      }
+    },
+    badge4: {
+      type: new GraphQLList(BadgeType),
+      resolve(parent, arg) {
+        console.log("badge ", parent.badge4);
+        // return _.filter(badges, { badgeId: parent.badge4 });
+        return Badge.find({ badgeId: parent.badge4 });
+      }
+    },
+    badge5: {
+      type: new GraphQLList(BadgeType),
+      resolve(parent, arg) {
+        console.log("badge ", parent.badge5);
+        // return _.filter(badges, { badgeId: parent.badge5 });
+        return Badge.find({ badgeId: parent.badge5 });
+      }
+    },
+    badge6: {
+      type: new GraphQLList(BadgeType),
+      resolve(parent, arg) {
+        console.log("badge ", parent.badge6);
+        // return _.filter(badges, { badgeId: parent.badge6 });
+        return Badge.find({ badgeId: parent.badge6 });
+      }
+    }
   })
 });
 const ClassType = new GraphQLObjectType({
   name: "Class",
   fields: () => ({
-    id: { type: GraphQLID },
+    classId: { type: GraphQLID },
     name: { type: GraphQLString }
-    // books: {
-    //   type: new GraphQLList(BookType),
-    //   resolve(parent, args) {
-    //     console.log(parent);
-    //     // return _.filter(books, { authorId: parent.id})
-    //     return Book.find({ authorId: parent.id });
-    //   }
-    // }
   })
 });
 
 const BadgeType = new GraphQLObjectType({
   name: "Badge",
   fields: () => ({
-    id: { type: GraphQLID},
-    name: { type: GraphQLString},
-    url: { type: GraphQLString}
+    badgeId: { type: GraphQLID },
+    name: { type: GraphQLString },
+    url: { type: GraphQLString }
   })
-})
+});
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: () => ({
@@ -126,45 +172,109 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return _.find(users, { id: args.id });
-        // return Book.findById(args.id);
+        // return _.find(users, { id: args.id });
+        return User.findById(args.id);
       }
     },
     class: {
       type: ClassType,
-      args: { id: { type: GraphQLID } },
+      args: { classId: { type: GraphQLID } },
       resolve(parent, args) {
-        return _.find(classes, { id: args.id });
-        // return Author.findById(args.id);
+        // return _.find(classes, { classId: args.id });
+        return Class.findById(args.id);
       }
     },
 
-  
     users: {
       type: new GraphQLList(UserType),
       resolve(parent, args) {
-        return users;
-        // return Users.find({});
+        // return users;
+        return User.find({});
       }
     },
     classes: {
       type: new GraphQLList(ClassType),
       resolve(parent, args) {
-        return classes;
-        // return Users.find({});
+        // return classes;
+        return Class.find({});
       }
     },
     badges: {
       type: new GraphQLList(BadgeType),
-      resolve(parent, args){
-        return badges;
+      resolve(parent, args) {
+        // return badges;
+        return Badge.find({});
       }
     }
   })
 });
-
-
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+        userType: { type: new GraphQLNonNull(GraphQLString) },
+        classId: { type: new GraphQLNonNull(GraphQLString) },
+        badge1: { type: GraphQLString },
+        badge2: { type: GraphQLString },
+        badge3: { type: GraphQLString },
+        badge4: { type: GraphQLString },
+        badge5: { type: GraphQLString },
+        badge6: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        let fillUser = new User({
+          name: args.name,
+          age: args.age,
+          userType: args.url,
+          classId: args.classId,
+          badge1: args.badge1,
+          badge2: args.badge2,
+          badge3: args.badge3,
+          badge4: args.badge4,
+          badge5: args.badge5,
+          badge6: args.badge6
+        });
+        return fillUser.save();
+      }
+    },
+    addBadge: {
+      type: BadgeType,
+      args: {
+        badgeId: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        url: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let fillBadge = new Badge({
+          badgeId: args.badgeId,
+          name: args.name,
+          url: args.url
+        });
+        return fillBadge.save();
+      }
+    },
+    addClass: {
+      type: ClassType,
+      args: {
+        classId: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let fillAuthor = new Class({
+          classId: args.classId,
+          name: args.name
+        });
+        return fillAuthor.save();
+      }
+    }
+  }
+});
 
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation
 });

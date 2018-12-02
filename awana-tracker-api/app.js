@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const app = express();
 
 
-mongoose.connect('mongodb://aj:test123@ds115664.mlab.com:15664/ggl-ninja')
+mongoose.connect('mongodb://testUser:test123@ds235411.mlab.com:35411/awana-tracker')
 mongoose.connection.once('open', () => {
     console.log('connected to mongo')
 })
