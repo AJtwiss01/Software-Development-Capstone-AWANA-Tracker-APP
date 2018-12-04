@@ -2,8 +2,12 @@ const express = require('express');
 const graphHTTP = require('express-graphql')
 const schema = require("./schema/schema")
 const mongoose = require("mongoose")
+const cors = require("cors")
 const app = express();
 
+
+//allow cors
+app.use(cors())
 
 mongoose.connect('mongodb://testUser:test123@ds235411.mlab.com:35411/awana-tracker')
 mongoose.connection.once('open', () => {
