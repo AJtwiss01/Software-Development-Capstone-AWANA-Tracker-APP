@@ -1,39 +1,47 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { gql } from "apollo-boost";
+import { graphql, Query } from "react-apollo";
 
-let AWANAClassNames = [
+const GET_ClASSES = gql`
   {
-    id: 1,
-    name: "Cubies"
-  },
-  {
-    id: 2,
-    name: "Sparkies"
-  },
-  {
-    id: 3,
-    name: "T&T"
+    classes {
+      classId
+      name
+    }
   }
-];
+`;
 
 class ClassList extends Component {
   render() {
+    const { data } = this.props;
     return (
       <div className="row text-center placeholders">
-        {AWANAClassNames.map(AWANAClassName => (
-          <div className="col-md-6 col-lg-3 placeholder">
-            <a href="#" className="ClassButton">
-              <div className="card p-4">
-                <i class="fa fa-graduation-cap fa-5x" aria-hidden="true" />
-
-                <div className="card-body">
-                  <h4 className="card-title">{AWANAClassName.name}</h4>
-                  <p className="card-text">{AWANAClassName.gradeLevel}</p>
-                </div>
+        <Query query={GET_ClASSES}>
+          {({ loading, error, data }) => {
+            if (loading) return "Loading...";
+            if (error) return `Error! ${error.message}`;
+            return (
+              <div style={{ display: "flex", width: "100%" }}>
+                {data.classes.map(AWANAClassName => (
+                  <div className="col-md-6 col-lg-3 placeholder">
+                    <a href="#" className="ClassButton">
+                      <div className="card p-4">
+                        <i
+                          class="fa fa-graduation-cap fa-5x"
+                          aria-hidden="true"
+                        />
+                        <div className="card-body">
+                          <h4 className="card-title">{AWANAClassName.name}</h4>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                ))}
               </div>
-            </a>
-          </div>
-        ))}
+            );
+          }}
+        </Query>
       </div>
     );
   }
@@ -41,4 +49,4 @@ class ClassList extends Component {
 
 ClassList.propTypes = {};
 
-export default ClassList;
+export default graphql(GET_ClASSES)(ClassList);
