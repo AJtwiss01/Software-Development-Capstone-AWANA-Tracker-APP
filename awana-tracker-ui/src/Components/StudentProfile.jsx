@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { gql } from "apollo-boost";
+import { graphql, Query } from "react-apollo";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 const Badges = [
@@ -20,12 +22,70 @@ const Badges = [
     url: "assets/img/badge1.png"
   }
 ];
+const GET_STUDENT = gql`
+  query User($id: ID!) {
+    user(id:$id) {
+      name
+      age
+      classId {
+        classId
+        name
+      }
+      badge1 {
+        badgeId
+        name
+        url
+      }
+      badge2 {
+        badgeId
+        name
+        url
+      }
+      badge3 {
+        badgeId
+        name
+        url
+      }
+      badge4 {
+        badgeId
+        name
+        url
+      }
+      badge5 {
+        badgeId
+        name
+        url
+      }
+      badge6 {
+        badgeId
+        name
+        url
+      }
+    }
+  }
+`;
 class StudentProfile extends Component {
+  componentDidMount(){
+    const { data} = this.props
+    console.log(this.props.data)
+
+  }
   render() {
+ 
+    const { data, id} = this.props
+
+    console.log(data.variables)
+   
     return (
+      <Query query={GET_STUDENT} variables={data.variables}>
+        {({ loading, error, data }) => {
+          if (loading) return null;
+          if (error) return `Error!: ${error}`;
+
+          return <div>
       <div id="student-profile" className="row text-center placeholders ">
         <div className="studentprofile mb-5">
-          <h1>Students Profile</h1>
+          <h1>{data.user.name}</h1>
           <div className="col-sm-12">
             <img
               class="card-img-top m-auto"
@@ -42,7 +102,7 @@ class StudentProfile extends Component {
                   type="text"
                   name="name"
                   id="studentName"
-                  placeholder="Frist & Last Name"
+                  placeholder={data.user.name}
                 />
               </FormGroup>
               <FormGroup>
@@ -51,7 +111,7 @@ class StudentProfile extends Component {
                   type="text"
                   name="class"
                   id="className"
-                  placeholder="Class"
+                  placeholder={data.user.classId[0].name}
                 />
               </FormGroup>
               <FormGroup>
@@ -92,7 +152,7 @@ class StudentProfile extends Component {
                   <option>section 9</option>
                   <option>section 10</option>
                 </Input>
-               
+
               </FormGroup>
               <Button color="primary">Add Badge</Button>
             </Form>
@@ -114,10 +174,15 @@ class StudentProfile extends Component {
           </div>
         </div>
       </div>
+      </div>;
+        }}
+      </Query>
     );
   }
 }
 
 StudentProfile.propTypes = {};
 
-export default StudentProfile;
+export default graphql(GET_STUDENT,  {
+  options: (props) => ({ variables: { id: "5c046f5a1b04143ce674fb11" } })
+})(StudentProfile);
