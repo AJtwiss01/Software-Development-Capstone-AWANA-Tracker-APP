@@ -38,6 +38,7 @@ const GET_STUDENTS = gql`
 
 class StudentList extends Component {
   render() {
+    console.log("props", this.props)
     const { data } = this.props;
 
     return (

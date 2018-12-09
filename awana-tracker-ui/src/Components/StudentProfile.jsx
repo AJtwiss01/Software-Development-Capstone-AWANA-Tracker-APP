@@ -72,12 +72,12 @@ class StudentProfile extends Component {
   }
   render() {
  
-    const { data, id} = this.props
-
+    const { data, id, location} = this.props
+    console.log('location ', location.state.id)
     console.log(data.variables)
    
     return (
-      <Query query={GET_STUDENT} variables={data.variables}>
+      <Query query={GET_STUDENT} variables={{id:location.state.id}}>
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return `Error!: ${error}`;
@@ -117,6 +117,8 @@ class StudentProfile extends Component {
               <FormGroup>
                 <Label for="age">Age</Label>
                 <Input type="select" name="age" id="ageSelect">
+                <option value="" disabled selected>{data.user.age}</option>
+
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
