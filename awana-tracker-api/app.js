@@ -17,6 +17,6 @@ app.use('/graphql', graphHTTP({
 schema,
 graphiql: true
 }))
-app.listen(4000, () => {
+app.listen(process.env.PORT ||4000, () => {
     console.log('now listening for requests on port 4000 my learning ');
 });
