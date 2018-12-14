@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AppRoute from './config/routes'
-import Navbar from './Components/Navbar'
 import './styles/overrides.scss'; 
 
 
@@ -20,7 +19,6 @@ class App extends Component {
       <ApolloProvider client={client}>
       <div className="bodyWrapper">
         
-        <Navbar />
         <AppRoute />
       </div>
       </ApolloProvider>

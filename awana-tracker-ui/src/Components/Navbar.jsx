@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom"
 
 class Navbar extends Component {
   render() {
@@ -17,7 +18,7 @@ class Navbar extends Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <a className="navbar-brand" href="index.html">
+          <Link className="navbar-brand"  to={{ pathname: "/" }}>
             <img
               role="img"
               aria-label="Logo"
@@ -27,7 +28,7 @@ class Navbar extends Component {
             />
             
             <span className="awan-tag-text hidden-md-up pl-2">AWANA Dashboard</span>
-          </a>
+          </Link>
           <div className="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul className="navbar-nav m-auto">
               <li>

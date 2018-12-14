@@ -14,81 +14,11 @@ const {
   GraphQLNonNull
 } = graphql;
 
-// const users = [
-//   {
-//     name: "AJ Twiss",
-//     age: 40,
-//     userType: "Teacher",
-//     classId: "3",
-//     badge1: "1",
-//     badge2: "2"
-//   },
-//   {
-//     name: "Caden Twiss",
-//     age: 10,
-//     userType: "Student",
-//     classId: "3"
-//   },
-//   {
-//     name: "Ava Twiss",
-//     age: 7,
-//     userType: "Student",
-//     classId: "1"
-//   }
-// ];
-
-// const classes = [
-//   {
-//     classId: "1",
-//     name: "Cubies"
-//   },
-//   {
-//     classId: "2",
-//     name: "Sparkies"
-//   },
-//   {
-//     classId: "3",
-//     name: "T&T"
-//   }
-// ];
-
-// const badges = [
-//   {
-//     badgeId: "1",
-//     name: "Section 1",
-//     url: "assets/img/badge1.png"
-//   },
-//   {
-//     badgeId: "2",
-//     name: "Section 2",
-//     url: "assets/img/badge1.png"
-//   },
-//   {
-//     badgeId: "3",
-//     name: "Section 3",
-//     url: "assets/img/badge1.png"
-//   },
-//   {
-//     badgeId: "4",
-//     name: "Seciton 4",
-//     url: "assets/img/badge1.png"
-//   },
-//   {
-//     badgeId: "5",
-//     name: "Seciton 4",
-//     url: "assets/img/badge1.png"
-//   },
-//   {
-//     badgeId: "6",
-//     name: "Seciton 4",
-//     url: "assets/img/badge1.png"
-//   }
-// ];
 
 const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
-    id:{ type: GraphQLID},
+    id: { type: GraphQLID },
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
     userType: { type: GraphQLString },
@@ -212,6 +142,24 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
+    updateUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+        classId: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let updateUser = new User({
+          id: args.id,
+          name: args.name,
+          age: args.age,
+          classId: args.classId
+        });
+        return updateUser.save();
+      }
+    },
     addUser: {
       type: UserType,
       args: {

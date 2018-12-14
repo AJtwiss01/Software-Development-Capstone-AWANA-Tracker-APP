@@ -8,21 +8,15 @@ class SideBar extends Component {
       <nav className="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
         <ul className="nav nav-pills flex-column">
           <li className="nav-item">
-            <a className="nav-link" href="student-list.html">
-              <Link
-                to={{
-                  pathname: "/students"
-                }}
-              >
+            <Link className="nav-link" to={{ pathname: "/students" }}>
               Student List
-              </Link>
-            </a>
+            </Link>
           </li>
-          {/* <li className="nav-item">
-            <a className="nav-link" href="student-profile.html">
-              Student Profile
-            </a>
-          </li> */}
+          <li className="nav-item">
+            <Link className="nav-link" to={{ pathname: "/manage-users"}}>
+              Manage Users
+            </Link>
+          </li>
         </ul>
       </nav>
     );

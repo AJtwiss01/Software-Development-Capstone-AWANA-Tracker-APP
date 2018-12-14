@@ -38,7 +38,7 @@ const GET_STUDENTS = gql`
 
 class StudentList extends Component {
   render() {
-    console.log("props", this.props)
+    console.log("props", this.props);
     const { data } = this.props;
 
     return (
@@ -67,16 +67,15 @@ class StudentList extends Component {
                             <p className="card-text">
                               {student.classId[0].name}
                             </p>
-                            <a href={"#"} className="btn btn-outline-primary">
-                              <Link
-                                to={{
-                                  pathname: "/student-profile",
-                                  state: { id: student.id }
-                                }}
-                              >
-                             See Profile
-                              </Link>
-                            </a>
+                            <Link
+                              className="btn btn-outline-primary"
+                              to={{
+                                pathname: "/student-profile",
+                                state: { id: student.id }
+                              }}
+                            >
+                              See Profile
+                            </Link>
                           </div>
                         </div>
                       </div>
