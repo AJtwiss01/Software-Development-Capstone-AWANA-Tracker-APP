@@ -4,29 +4,12 @@ import { gql } from "apollo-boost";
 import { graphql, Query, Mutation } from "react-apollo";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { timingSafeEqual } from "crypto";
 
-const Badges = [
-  {
-    name: "Section 1",
-    url: "assets/img/badge1.png"
-  },
-  {
-    name: "Section 2",
-    url: "assets/img/badge1.png"
-  },
-  {
-    name: "Section 3",
-    url: "assets/img/badge1.png"
-  },
-  {
-    name: "Seciton 4",
-    url: "assets/img/badge1.png"
-  }
-];
+
 const GET_STUDENT = gql`
   query User($id: ID!) {
     user(id: $id) {
+      id
       name
       age
       classId {
@@ -75,13 +58,13 @@ const ADD_TODO = gql`
   }
 `;
 class StudentProfile extends Component {
- state = {
-      studentsID: "",
-      studentsName: "",
-      studentsAge: "",
-      awanaClassName: "",
-      studentsBadge: ""
-  }
+  state = {
+    studentsID: "",
+    studentsName: "",
+    studentsAge: "",
+    awanaClassName: "",
+    studentsBadge: ""
+  };
 
   componentDidMount() {
     const { data } = this.props;
@@ -133,7 +116,10 @@ class StudentProfile extends Component {
                           name="name"
                           id="studentsName"
                           onChange={e =>
-                            this.setState({ studentsName: e.target.value, studentsID: data.user.Id })
+                            this.setState({
+                              studentsName: e.target.value,
+                              studentsID: data.user.Id
+                            })
                           }
                           placeholder={data.user.name}
                         />
@@ -141,14 +127,20 @@ class StudentProfile extends Component {
                       <FormGroup>
                         <Label for="classes">Class</Label>
                         <Input
-                          type="text"
-                          name="classes"
-                          id="classes"
+                          type="select"
+                          name="class"
+                          id="class"
                           onChange={e =>
                             this.setState({ awanaClassName: e.target.value })
                           }
-                          placeholder={data.user.classId[0].name}
-                        />
+                        >
+                          <option disabled selected>
+                            {data.user.classId[0].name}
+                          </option>
+                          <option value="1">Cubbies</option>
+                          <option value="2">Sparkies</option>
+                          <option value="3">T&amp;T</option>
+                        </Input>
                       </FormGroup>
                       <FormGroup>
                         <Label for="age">Age</Label>
@@ -160,7 +152,7 @@ class StudentProfile extends Component {
                             this.setState({ studentsAge: e.target.value })
                           }
                         >
-                          <option value=" disabled selected">
+                          <option disabled selected>
                             {data.user.age}
                           </option>
                           <option>1</option>
