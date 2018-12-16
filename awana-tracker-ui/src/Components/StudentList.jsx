@@ -51,7 +51,7 @@ class StudentList extends Component {
             return (
               <div style={{ display: "flex", width: "100%" }}>
                 {data.users.map(student => {
-                  if (student.userType === "student") {
+                  if (student.userType === "student" || student.userType === "Student") {
                     return (
                       <div className="col-md-6 col-lg-3 placeholder">
                         <div className="card p-4">
