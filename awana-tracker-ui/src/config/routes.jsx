@@ -23,7 +23,7 @@ const AppRoute = () => (
           <div class="container-fluid">
             <div className="row">
               <SideBar />
-              <main class=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
+              <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
                 <Admin {...props} isAuthed={true} />
               </main>
             </div>
@@ -41,7 +41,7 @@ const AppRoute = () => (
           <div >
             <div className="row">
               <SideBar />
-              <main class=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
+              <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
                 <ClassList {...props} isAuthed={true} />
               </main>
             </div>
@@ -60,7 +60,7 @@ const AppRoute = () => (
             
             <div className="row">
               <SideBar />
-              <main class=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
+              <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
                 <StudentList {...props} isAuthed={true} />
               </main>
             </div>
@@ -79,7 +79,7 @@ const AppRoute = () => (
             
             <div className="row">
               <SideBar />
-              <main class=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
+              <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
                 <StudentProfile {...props} isAuthed={true} />
               </main>
             </div>
@@ -96,7 +96,7 @@ const AppRoute = () => (
           <div >
             <div className="row">
               <SideBar />
-              <main class=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
+              <main className=" col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-5 bg-primary3 main">
                 <ManageUsers {...props} isAuthed={true} />
               </main>
             </div>

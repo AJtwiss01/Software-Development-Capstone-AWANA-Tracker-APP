@@ -11,9 +11,9 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLInputObjectType
 } = graphql;
-
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -96,6 +96,15 @@ const BadgeType = new GraphQLObjectType({
     url: { type: GraphQLString }
   })
 });
+
+const UserDeleteType = new GraphQLInputObjectType({
+  name: "UserDeleteType",
+  type: UserType,
+  fields: () => ({
+    id: { type: new GraphQLNonNull(GraphQLID) }
+  })
+});
+
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: () => ({
@@ -142,24 +151,41 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    updateUser: {
+    updateStudentInfo: {
       type: UserType,
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         name: { type: new GraphQLNonNull(GraphQLString) },
         age: { type: new GraphQLNonNull(GraphQLInt) },
-        classId: { type: new GraphQLNonNull(GraphQLString) }
+        classId: { type: new GraphQLNonNull(GraphQLString) },
+        badge1: { type: GraphQLString },
+        badge2: { type: GraphQLString },
+        badge3: { type: GraphQLString },
+        badge4: { type: GraphQLString },
+        badge5: { type: GraphQLString },
+        badge6: { type: GraphQLString }
       },
       resolve(parent, args) {
-        let updateUser = new User({
-          id: args.id,
-          name: args.name,
-          age: args.age,
-          classId: args.classId
-        });
-        return updateUser.save();
+        return User.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              name: args.name,
+              age: args.age,
+              classId: args.classId,
+              badge1: args.badge1,
+              badge2: args.badge2,
+              badge3: args.badge3,
+              badge4: args.badge4,
+              badge5: args.badge5,
+              badge6: args.badge6
+            }
+          },
+          { new: true }
+        ).catch(err => new Error(err));
       }
     },
+  
     addUser: {
       type: UserType,
       args: {
@@ -178,7 +204,7 @@ const Mutation = new GraphQLObjectType({
         let fillUser = new User({
           name: args.name,
           age: args.age,
-          userType: args.url,
+          userType: args.userType,
           classId: args.classId,
           badge1: args.badge1,
           badge2: args.badge2,
@@ -188,6 +214,19 @@ const Mutation = new GraphQLObjectType({
           badge6: args.badge6
         });
         return fillUser.save();
+      }
+    },
+    deleteUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parent, args) {
+        const removeduser = User.findByIdAndRemove(args.id).exec();
+        if (!removeduser) {
+          throw new Error("Error");
+        }
+        return removeduser;
       }
     },
     addBadge: {

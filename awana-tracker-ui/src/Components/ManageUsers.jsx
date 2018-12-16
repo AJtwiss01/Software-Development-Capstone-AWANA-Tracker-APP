@@ -5,7 +5,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
 
 import { gql } from "apollo-boost";
-import { graphql, Query, Mutation } from "react-apollo";
+import { graphql, Query, Mutation, compose, refetchQueries} from "react-apollo";
 import { ALL_USER_AGE_MAX } from "../constants";
 
 const columns = [
@@ -41,16 +41,38 @@ const GET_ALLUSERS = gql`
   }
 `;
 
+const ADD_USERS = gql`
+mutation($name: String!, $age: Int!, $userType: String!, $classId: String!){
+  addUser(name: $name, age:$age, userType: $userType,classId: $classId, ){
+    name
+    age
+    userType
+    classId{
+      classId
+      name
+    }
+  }
+} 
+`;
+
 class ManageUsers extends Component {
   addNewUser = event => {
     event.preventDefault();
     console.log("add user", event);
     console.log(this.state);
+    this.props.ADD_USERS({
+      variables:{
+        name: this.state.userName,
+        age: parseInt(this.state.userAge),
+        userType: this.state.userType,
+        classId: this.state.userClass
+      },
+      refetchQueries:[{query: GET_ALLUSERS}]
+    })
   };
 
   render() {
     const { data } = this.props;
-    console.log(ALL_USER_AGE_MAX);
     let arr = [];
     const ageOptions = () => {
       for (let i = 1; i < ALL_USER_AGE_MAX; i++) {
@@ -59,7 +81,6 @@ class ManageUsers extends Component {
       return arr;
     };
     ageOptions();
-    console.log(arr);
     return (
       <div>
         <Query query={GET_ALLUSERS}>
@@ -96,7 +117,7 @@ class ManageUsers extends Component {
                         >
                           <option>Teacher</option>
                           <option>Student</option>
-                          <option>Admin</option>
+                          <option>Leader</option>
                         </Input>
                       </FormGroup>
 
@@ -158,4 +179,7 @@ class ManageUsers extends Component {
 
 ManageUsers.propTypes = {};
 
-export default graphql(GET_ALLUSERS)(ManageUsers);
+export default compose(
+  graphql(ADD_USERS, {name: "ADD_USERS"}),
+  graphql(GET_ALLUSERS, {name: "GET_ALLUSERS"})
+  )(ManageUsers);

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { gql } from "apollo-boost";
-import { graphql, Query, Mutation } from "react-apollo";
+import { graphql, Query, Mutation, compose } from "react-apollo";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-
 
 const GET_STUDENT = gql`
   query User($id: ID!) {
@@ -49,41 +48,211 @@ const GET_STUDENT = gql`
     }
   }
 `;
-const ADD_TODO = gql`
-  mutation AddTodo($type: String!) {
-    addTodo(type: $type) {
+
+const UPDATE_STUDENTINFO = gql`
+  mutation(
+    $id: ID!
+    $name: String!
+    $age: Int!
+    $classId: String!
+    $badge1: String!
+    $badge2: String!
+    $badge3: String!
+    $badge4: String!
+    $badge5: String!
+    $badge6: String!
+  ) {
+    updateStudentInfo(
+      id: $id
+      name: $name
+      age: $age
+      classId: $classId
+      badge1: $badge1
+      badge2: $badge2
+      badge3: $badge3
+      badge4: $badge4
+      badge5: $badge5
+      badge6: $badge6
+    ) {
       id
-      type
+      name
+      age
+      classId {
+        classId
+        name
+      }
+      badge1 {
+        badgeId
+        name
+      }
+      badge2 {
+        badgeId
+        name
+      }
+      badge3 {
+        badgeId
+        name
+      }
+      badge4 {
+        badgeId
+        name
+      }
+      badge5 {
+        badgeId
+        name
+      }
+      badge6 {
+        badgeId
+        name
+      }
     }
   }
 `;
+
 class StudentProfile extends Component {
   state = {
     studentsID: "",
     studentsName: "",
     studentsAge: "",
     awanaClassName: "",
-    studentsBadge: ""
+    studentBadge1: "",
+    studentBadge2: "",
+    studentBadge3: "",
+    studentBadge4: "",
+    studentBadge5: "",
+    studentBadge6: "",
+    checkSection: ""
   };
 
-  componentDidMount() {
-    const { data } = this.props;
-    console.log(this.props.data);
-  }
+
   updatesStudent = event => {
     event.preventDefault();
-    console.log("clicked");
     console.log(this.state);
+    this.props.UPDATE_STUDENTINFO({
+      variables: {
+        id: this.state.studentsID,
+        name: this.state.studentsName,
+        age: parseInt(this.state.studentsAge),
+        classId: this.state.awanaClassName,
+        badge1: this.state.studentBadge1,
+        badge2: this.state.studentBadge2,
+        badge3: this.state.studentBadge3,
+        badge4: this.state.studentBadge4,
+        badge5: this.state.studentBadge5,
+        badge6: this.state.studentBadge6
+      },
+      refetchQueries: [{ query: UPDATE_STUDENTINFO }]
+    });
   };
   updateStudentBadge = event => {
     event.preventDefault();
-    console.log("clicked");
-    console.log(this.state);
+
+    if(this.state.checkSection === "1"){
+      this.props.UPDATE_STUDENTINFO({
+        variables: {
+          id: this.state.studentsID,
+          name: this.state.studentsName,
+          age: parseInt(this.state.studentsAge),
+          classId: this.state.awanaClassName,
+          badge1: this.state.checkSection,
+          badge2: this.state.studentBadge2,
+          badge3: this.state.studentBadge3,
+          badge4: this.state.studentBadge4,
+          badge5: this.state.studentBadge5,
+          badge6: this.state.studentBadge6
+        },
+        refetchQueries: [{ query: GET_STUDENT }]
+      });
+    }
+    else if(this.state.checkSection === "2"){
+      this.props.UPDATE_STUDENTINFO({
+        variables: {
+          id: this.state.studentsID,
+          name: this.state.studentsName,
+          age: parseInt(this.state.studentsAge),
+          classId: this.state.awanaClassName,
+          badge1: this.state.studentBadge1,
+          badge2: this.state.checkSection,
+          badge3: this.state.studentBadge3,
+          badge4: this.state.studentBadge4,
+          badge5: this.state.studentBadge5,
+          badge6: this.state.studentBadge6
+        },
+        refetchQueries: [{ query: GET_STUDENT }]
+      });
+    }
+    else if(this.state.checkSection === "3"){
+      this.props.UPDATE_STUDENTINFO({
+        variables: {
+          id: this.state.studentsID,
+          name: this.state.studentsName,
+          age: parseInt(this.state.studentsAge),
+          classId: this.state.awanaClassName,
+          badge1: this.state.studentBadge1,
+          badge2: this.state.studentBadge2,
+          badge3: this.state.checkSection,
+          badge4: this.state.studentBadge4,
+          badge5: this.state.studentBadge5,
+          badge6: this.state.studentBadge6
+        },
+        refetchQueries: [{ query: GET_STUDENT }]
+      });
+    }
+    else if(this.state.checkSection === "4"){
+      this.props.UPDATE_STUDENTINFO({
+        variables: {
+          id: this.state.studentsID,
+          name: this.state.studentsName,
+          age: parseInt(this.state.studentsAge),
+          classId: this.state.awanaClassName,
+          badge1: this.state.studentBadge1,
+          badge2: this.state.studentBadge2,
+          badge3: this.state.studentBadge3,
+          badge4: this.state.checkSection,
+          badge5: this.state.studentBadge5,
+          badge6: this.state.studentBadge6
+        },
+        refetchQueries: [{ query: GET_STUDENT }]
+      });
+    }
+    else if(this.state.checkSection === "5"){
+      this.props.UPDATE_STUDENTINFO({
+        variables: {
+          id: this.state.studentsID,
+          name: this.state.studentsName,
+          age: parseInt(this.state.studentsAge),
+          classId: this.state.awanaClassName,
+          badge1: this.state.studentBadge1,
+          badge2: this.state.studentBadge2,
+          badge3: this.state.studentBadge3,
+          badge4: this.state.studentBadge4,
+          badge5: this.state.checkSection,
+          badge6: this.state.studentBadge6
+        },
+        refetchQueries: [{ query: GET_STUDENT }]
+      });
+    }
+    else if(this.state.checkSection === "6"){
+      this.props.UPDATE_STUDENTINFO({
+        variables: {
+          id: this.state.studentsID,
+          name: this.state.studentsName,
+          age: parseInt(this.state.studentsAge),
+          classId: this.state.awanaClassName,
+          badge1: this.state.studentBadge1,
+          badge2: this.state.studentBadge2,
+          badge3: this.state.studentBadge3,
+          badge4: this.state.studentBadge4,
+          badge5: this.state.studentBadge5,
+          badge6: this.state.checkSection
+        },
+        refetchQueries: [{ query: GET_STUDENT }]
+      });
+      
+    }
   };
   render() {
     const { data, id, location } = this.props;
-    console.log("location ", location.state.id);
-    console.log(data.variables);
 
     return (
       <Query query={GET_STUDENT} variables={{ id: location.state.id }}>
@@ -117,8 +286,20 @@ class StudentProfile extends Component {
                           id="studentsName"
                           onChange={e =>
                             this.setState({
+                              studentsID: data.user.id,
                               studentsName: e.target.value,
-                              studentsID: data.user.Id
+                              studentBadge1:
+                                data.user.badge1.length > 0 ? "1" : "",
+                              studentBadge2:
+                                data.user.badge2.length > 0 ? "2" : "",
+                              studentBadge3:
+                                data.user.badge3.length > 0 ? "3" : "",
+                              studentBadge4:
+                                data.user.badge4.length > 0 ? "4" : "",
+                              studentBadge5:
+                                data.user.badge5.length > 0 ? "5" : "",
+                              studentBadge6:
+                                data.user.badge6.length > 0 ? "6" : ""
                             })
                           }
                           placeholder={data.user.name}
@@ -180,22 +361,36 @@ class StudentProfile extends Component {
                         <Label for="exampleSelect">Badge Completion</Label>
                         <Input
                           type="select"
-                          name="age"
-                          id="ageSelect"
+                          name="badge"
+                          id="badgeSelect"
                           onChange={e =>
-                            this.setState({ studentsBadge: e.target.value })
+                            this.setState({
+                              studentsID: data.user.id,
+                              studentsName: data.user.name,
+                              studentsAge: data.user.age,
+                              awanaClassName: data.user.classId[0].classId,
+                              studentBadge1:
+                                data.user.badge1.length > 0 ? "1" : "",
+                              studentBadge2:
+                                data.user.badge2.length > 0 ? "2" : "",
+                              studentBadge3:
+                                data.user.badge3.length > 0 ? "3" : "",
+                              studentBadge4:
+                                data.user.badge4.length > 0 ? "4" : "",
+                              studentBadge5:
+                                data.user.badge5.length > 0 ? "5" : "",
+                              studentBadge6:
+                                data.user.badge6.length > 0 ? "6" : "",
+                              checkSection: e.target.value
+                            })
                           }
                         >
-                          <option>section 1</option>
-                          <option>section 2</option>
-                          <option>section 3</option>
-                          <option>section 4</option>
-                          <option>section 5</option>
-                          <option>section 6</option>
-                          <option>section 7</option>
-                          <option>section 8</option>
-                          <option>section 9</option>
-                          <option>section 10</option>
+                          <option value="1">section 1</option>
+                          <option value="2">section 2</option>
+                          <option value="3">section 3</option>
+                          <option value="4">section 4</option>
+                          <option value="5">section 5</option>
+                          <option value="6">section 6</option>
                         </Input>
                       </FormGroup>
                       <Button color="primary">Add Badge</Button>
@@ -242,19 +437,7 @@ class StudentProfile extends Component {
                           </span>
                         </li>
                       )}
-                      {data.user.badge3.length > 0 && (
-                        <li>
-                          <img
-                            src={data.user.badge3[0].url}
-                            className="img-responsive inline-block"
-                            alt="Responsive image"
-                            width="80"
-                          />
-                          <span className="ml-1 mr-4">
-                            {data.user.badge3[0].name}
-                          </span>
-                        </li>
-                      )}
+
                       {data.user.badge4.length > 0 && (
                         <li>
                           <img
@@ -308,6 +491,10 @@ class StudentProfile extends Component {
 
 StudentProfile.propTypes = {};
 
-export default graphql(GET_STUDENT, {
-  options: props => ({ variables: { id: "5c046f5a1b04143ce674fb11" } })
-})(StudentProfile);
+export default compose(
+  graphql(UPDATE_STUDENTINFO, { name: "UPDATE_STUDENTINFO" }),
+  graphql(GET_STUDENT, {
+    name: "GET_STUDENTS",
+    options: props => ({ variables: { id: "5c046f5a1b04143ce674fb11" } })
+  })
+)(StudentProfile);
