@@ -84,26 +84,32 @@ const UPDATE_STUDENTINFO = gql`
       badge1 {
         badgeId
         name
+        url
       }
       badge2 {
         badgeId
         name
+        url
       }
       badge3 {
         badgeId
         name
+        url
       }
       badge4 {
         badgeId
         name
+        url
       }
       badge5 {
         badgeId
         name
+        url
       }
       badge6 {
         badgeId
         name
+        url
       }
     }
   }
@@ -128,6 +134,7 @@ class StudentProfile extends Component {
   updatesStudent = event => {
     event.preventDefault();
     console.log(this.state);
+ 
     this.props.UPDATE_STUDENTINFO({
       variables: {
         id: this.state.studentsID,
@@ -141,13 +148,14 @@ class StudentProfile extends Component {
         badge5: this.state.studentBadge5,
         badge6: this.state.studentBadge6
       },
-      refetchQueries: [{ query: UPDATE_STUDENTINFO }]
+      refetchQueries: [{ query: GET_STUDENT}]
     });
   };
   updateStudentBadge = event => {
     event.preventDefault();
 
     if(this.state.checkSection === "1"){
+      event.preventDefault();
       this.props.UPDATE_STUDENTINFO({
         variables: {
           id: this.state.studentsID,
@@ -161,10 +169,11 @@ class StudentProfile extends Component {
           badge5: this.state.studentBadge5,
           badge6: this.state.studentBadge6
         },
-        refetchQueries: [{ query: GET_STUDENT }]
+        refetchQueries: [{ query: UPDATE_STUDENTINFO }]
       });
     }
     else if(this.state.checkSection === "2"){
+      event.preventDefault();
       this.props.UPDATE_STUDENTINFO({
         variables: {
           id: this.state.studentsID,
@@ -178,10 +187,11 @@ class StudentProfile extends Component {
           badge5: this.state.studentBadge5,
           badge6: this.state.studentBadge6
         },
-        refetchQueries: [{ query: GET_STUDENT }]
+        refetchQueries: [{ query: UPDATE_STUDENTINFO }]
       });
     }
     else if(this.state.checkSection === "3"){
+      event.preventDefault();
       this.props.UPDATE_STUDENTINFO({
         variables: {
           id: this.state.studentsID,
@@ -195,10 +205,11 @@ class StudentProfile extends Component {
           badge5: this.state.studentBadge5,
           badge6: this.state.studentBadge6
         },
-        refetchQueries: [{ query: GET_STUDENT }]
+        refetchQueries: [{ query: UPDATE_STUDENTINFO }]
       });
     }
     else if(this.state.checkSection === "4"){
+      event.preventDefault();
       this.props.UPDATE_STUDENTINFO({
         variables: {
           id: this.state.studentsID,
@@ -212,10 +223,11 @@ class StudentProfile extends Component {
           badge5: this.state.studentBadge5,
           badge6: this.state.studentBadge6
         },
-        refetchQueries: [{ query: GET_STUDENT }]
+        refetchQueries: [{ query: UPDATE_STUDENTINFO }]
       });
     }
     else if(this.state.checkSection === "5"){
+      event.preventDefault();
       this.props.UPDATE_STUDENTINFO({
         variables: {
           id: this.state.studentsID,
@@ -229,10 +241,11 @@ class StudentProfile extends Component {
           badge5: this.state.checkSection,
           badge6: this.state.studentBadge6
         },
-        refetchQueries: [{ query: GET_STUDENT }]
+        refetchQueries: [{ query: UPDATE_STUDENTINFO }]
       });
     }
     else if(this.state.checkSection === "6"){
+      event.preventDefault();
       this.props.UPDATE_STUDENTINFO({
         variables: {
           id: this.state.studentsID,
@@ -246,16 +259,22 @@ class StudentProfile extends Component {
           badge5: this.state.studentBadge5,
           badge6: this.state.checkSection
         },
-        refetchQueries: [{ query: GET_STUDENT }]
+        refetchQueries: [{ query: UPDATE_STUDENTINFO }]
       });
       
     }
   };
+
+  removeBadge = event  => {
+    event.preventDefault();
+    console.log(this)
+  }
   render() {
     const { data, id, location } = this.props;
 
     return (
       <Query query={GET_STUDENT} variables={{ id: location.state.id }}>
+      
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return `Error!: ${error}`;
@@ -305,6 +324,7 @@ class StudentProfile extends Component {
                           placeholder={data.user.name}
                         />
                       </FormGroup>
+                     
                       <FormGroup>
                         <Label for="classes">Class</Label>
                         <Input
@@ -351,6 +371,7 @@ class StudentProfile extends Component {
 
                       <Button color="primary">Update</Button>
                     </Form>
+                   
                   </div>
                 </div>
 
